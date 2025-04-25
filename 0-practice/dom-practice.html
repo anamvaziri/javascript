@@ -35,6 +35,31 @@
         //myHeading.innerHTML = "This is a heading"
         //myDiv.appendChild(myHeading)
 
+        var clickCount = 0;
+
+var myDiv = document.getElementById("my-container");
+var myParagraph = document.getElementById("my-message");
+var myBtn = document.getElementById("my-awesome-btn");
+
+function myBtnClick() {
+    clickCount += 1;
+
+    // Update message and color
+    myParagraph.innerHTML = `You clicked me ${clickCount} times!`;
+    myParagraph.style.color = clickCount % 2 === 0 ? "blue" : "green";
+
+    // Add heading on first click
+    if (clickCount === 1) {
+        var myHeading = document.createElement("h3");
+        myHeading.innerHTML = "This is a heading";
+        myDiv.appendChild(myHeading);
+    }
+
+    console.log("YOU CLICKED ME", clickCount, "TIMES! :-)");
+}
+
+myBtn.addEventListener("click", myBtnClick, false);
+
     </script>
 
     <script type="text/javascript">
