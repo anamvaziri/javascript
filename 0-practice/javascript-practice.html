@@ -59,11 +59,35 @@
         myFunc()
         myFunc()
 
-
-
-
-
-
     </script>
+ //function with a parameter
+ function greet(name) {
+        return "Hello, " + name + "!";
+    }
+    
+    console.log(greet("Anam")); //> Hello, Anam!
+    console.log(greet("JavaScript Learner")); //> Hello, JavaScript Learner!
+
+    //Looping through the array
+console.log("LOOP THROUGH ARRAY:")
+a.forEach(function(num) {
+    console.log("Number:", num)
+})
+
+//Object manipulation
+console.log("MOVIE TITLE:", o.title)
+o.director = "David Yates"
+console.log("ADDED DIRECTOR:", o)
+
+//If/else example
+var age = 18
+if (age >= 18) {
+    console.log("You are an adult.")
+} else {
+    console.log("You are a minor.")
+}
+
+
+    
 </body>
 </html>
