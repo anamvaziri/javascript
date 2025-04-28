@@ -86,12 +86,10 @@
 
         var symbol = "NFLX" // one of: [AAPL, GOOGL, MSFT, NFLX, NVDA, SPOT]
         var filename = `daily_adjusted_${symbol}.csv`
-        var requestUrl = `https://raw.githubusercontent.com/prof-rossetti/intro-software-dev-python-book/refs/heads/main/docs/data/${filename}`
+        var requestUrl = `https://raw.githubusercontent.com/prof-rossetti/intro-software-dev-python-book/main/docs/data/${filename}`;
 
         d3.csv(requestUrl).then(function(data) {
             console.log("DATA:", data)
-
-            stocks
 
 console.log("---------------------")
             console.log("PART 1...")
