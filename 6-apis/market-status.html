@@ -122,7 +122,7 @@
         // Part 2A: Display US Market info on the page
         document.getElementById("display-region").textContent = usMarket.region;
         document.getElementById("display-type").textContent = usMarket.market_type;
-        document.getElementById("display-exchanges").textContent = usMarket.primary_exchanges.join(", ");
+        document.getElementById("display-exchanges").textContent = usMarket.primary_exchanges;
         document.getElementById("display-open").textContent = usMarket.local_open;
         document.getElementById("display-close").textContent = usMarket.local_close;
         document.getElementById("display-status").textContent = usMarket.current_status.toUpperCase();
