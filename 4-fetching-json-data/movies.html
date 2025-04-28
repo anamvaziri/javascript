@@ -76,67 +76,77 @@
     <script src="https://cdn.jsdelivr.net/npm/d3-array@3"></script>
     <script type="text/javascript">
 
-var requestUrl = "https://raw.githubusercontent.com/prof-rossetti/internet-technologies/main/data/hp-movies.json";
+        var requestUrl = "https://raw.githubusercontent.com/prof-rossetti/internet-technologies/refs/heads/main/data/hp-movies.json"
 
-fetch(requestUrl).then(response => response.json())
-    .then(function(data) {
-        console.log("DATA", data);
-
-        console.log("---------------------");
-        console.log("PART 1...");
-
-        console.log("Number of movies:", data.length);
-
-        data.forEach(function(movie) {
-            console.log(`${movie.title} (${movie.year})`);
-        });
-
-        var topMovie = data.reduce(function(highest, current) {
-            return (current.rating > highest.rating) ? current : highest;
-        });
-
-        console.log("Top-rated movie:", topMovie.title);
-        console.log("Rating:", topMovie.rating);
-
-        console.log("---------------------");
-        console.log("PART 2...");
-
-        var selectElement = document.getElementById("select-movie");
-
-        data.forEach(function(movie) {
-            var option = document.createElement("option");
-            option.value = movie.id;
-            option.textContent = movie.title;
-            selectElement.appendChild(option);
-        });
-
-        function updateMovieInfo() {
-            var selectedId = selectElement.value;
-            var selectedMovie = data.find(function(movie) {
-                return movie.id == selectedId;
-            });
-
-            if (selectedMovie) {
-                document.getElementById("display-title").textContent = selectedMovie.title;
-                document.getElementById("display-year").textContent = selectedMovie.year;
-                document.getElementById("display-rating").textContent = selectedMovie.rating;
-
-                var imageContainer = document.getElementById("image-container");
-                imageContainer.innerHTML = "";
-                var img = document.createElement("img");
-                img.src = selectedMovie.poster_url;
-                img.alt = selectedMovie.title;
-                img.style.maxWidth = "200px";
-                imageContainer.appendChild(img);
-            }
-        }
-
-        selectElement.addEventListener("change", updateMovieInfo);
-
-    })
-    .catch(err => console.log(err));
+        fetch(requestUrl).then(response => response.json())
+            .then(function(data){
+                console.log("DATA", data)
 
 
+                console.log("---------------------")
+                console.log("PART 1...")
+
+                console.log("MOVIES:", data.length)
+
+                data.forEach(movie => {
+                    console.log("...", movie["Title"], movie["Year"])
+                })
+
+                console.log("HIGHEST RATED:")
+                data.sort((a,b) => d3.descending(a["Rating"], b["Rating"]))
+                var highestRated = data[0]
+                console.log("... TITLE:", highestRated["Title"])
+                console.log(`... RATING: ${highestRated['Rating']} / 10`)
+
+
+
+
+                console.log("---------------------")
+                console.log("PART 2...")
+
+                var selectMovie = document.getElementById("select-movie")
+                var displayTitle = document.getElementById("display-title")
+                var displayYear = document.getElementById("display-year")
+                var displayRating = document.getElementById("display-rating")
+                var imageContainer = document.getElementById("image-container")
+
+                // sort data back in original order
+                data.sort((a,b) => d3.ascending(a["Id"], b["Id"]))
+
+                data.forEach(movie => {
+                    var option = document.createElement("option")
+                    option.value = movie.Id
+                    option.textContent = movie.Title
+
+                    selectMovie.appendChild(option)
+                })
+
+                function updateMovieInfo() {
+                    var selectedId = selectMovie.value
+                    var selectedMovie = data.find(movie => movie.Id == selectedId)
+
+                   if (selectedMovie) {
+                        displayTitle.textContent = selectedMovie.Title
+                        displayYear.textContent = selectedMovie.Year
+                        displayRating.textContent = selectedMovie.Rating
+
+                        imageContainer.innerHTML = "" // Clear any previous image
+                        var img = document.createElement("img")
+                        img.src = selectedMovie["Thumbnail Image URL"]
+                        img.alt = `Thumbnail of ${selectedMovie.Title}`
+                        imageContainer.appendChild(img)
+                   } else {
+                        displayTitle.textContent = "TODO"
+                        displayYear.textContent = "TODO"
+                        displayRating.textContent = "TODO"
+                        imageContainer.innerHTML = ""
+                   }
+                }
+                selectMovie.addEventListener("change", updateMovieInfo, false)
+
+
+            })
+            .catch(err => console.log(err))
 
     </script>
 </body>
