@@ -60,24 +60,36 @@
 
 
     <script type="text/javascript">
-
-        console.log("---------------------")
+console.log("---------------------")
         console.log("PART 1...")
 
-
+        const tempCelsius = -270;
+        const tempFahrenheit = (9 / 5) * tempCelsius + 32;
+        console.log("Celsius:", tempCelsius);
+        console.log("Fahrenheit:", tempFahrenheit);
 
 
 
         console.log("---------------------")
         console.log("PART 2...")
 
-
-
+        function calculateTemp(tempC) {
+        return (9 / 5) * tempC + 32;
+    }
+        const fahrenheitResult = calculateTemp(-270);
+        console.log("Celsius:", -270);
+        console.log("Fahrenheit:", fahrenheitResult);
 
 
 
         console.log("---------------------")
         console.log("PART 3...")
+
+        document.getElementById("calculate").addEventListener("click", function () {
+        const inputC = parseFloat(document.getElementById("input-temp-c").value);
+        const resultF = calculateTemp(inputC);
+        document.getElementById("display-temp-f").textContent = resultF.toFixed(2);
+    });
 
 
 

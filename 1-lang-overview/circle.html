@@ -49,18 +49,36 @@
 
     <script type="text/javascript">
 
-        console.log("---------------------")
-        console.log("PART 1...")
+console.log("---------------------")
+console.log("PART 1...")
 
+// Define the function to calculate area
+function calculateCircleArea(radius) {
+    return Math.PI * radius * radius;
+}
 
+// Call the function with a radius of 9
+var radius = 9;
+var area = calculateCircleArea(radius);
 
+// Log radius and area
+console.log("Radius:", radius);
+console.log("Area:", area);
 
+console.log("---------------------")
+console.log("PART 2...")
 
-        console.log("---------------------")
-        console.log("PART 2...")
+// Listen for button click
+document.getElementById("calculate").addEventListener("click", function() {
+    // Get value from input box
+    var inputRadius = document.getElementById("input-radius").value;
 
+    // Calculate area (make sure input is a number)
+    var calculatedArea = calculateCircleArea(Number(inputRadius));
 
-
+    // Display the result in the span
+    document.getElementById("display-area").textContent = calculatedArea.toFixed(2);
+});
 
 
     </script>

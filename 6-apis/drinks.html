@@ -60,31 +60,67 @@
 
 
 
-
     <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <script type="text/javascript">
-
-        var requestUrl = "TODO"
-
-        d3.json(requestUrl).then(function(data){
-            console.log("DATA:", data)
-
-
-            console.log("---------------------")
-            console.log("PART 1...")
-
-
-
-
-
-            console.log("---------------------")
-            console.log("PART 2...")
-
-
-
-
+    
+        // Correct URL for non-alcoholic drinks
+        var requestUrl = "https://www.thecocktaildb.com/api/json/v1/1/filter.php?a=Non_Alcoholic";
+    
+        d3.json(requestUrl).then(function(data) {
+            console.log("DATA:", data);
+    
+            console.log("---------------------");
+            console.log("PART 1...");
+    
+            // Access the list of drinks
+            var drinks = data.drinks;
+    
+            // Part 1C: Display the number of drinks
+            console.log("Number of non-alcoholic drinks:", drinks.length);
+    
+            // Part 1D: Loop through drinks and display name and ID
+            drinks.forEach(function(drink) {
+                console.log(`${drink.strDrink} (ID: ${drink.idDrink})`);
+            });
+    
+            console.log("---------------------");
+            console.log("PART 2...");
+    
+            // Part 2A: Display the number of drinks in the span
+            document.getElementById("display-drinks-count").textContent = drinks.length;
+    
+            // Part 2B: Loop through drinks and display name + image
+            var displayDiv = document.getElementById("display-drinks");
+    
+            drinks.forEach(function(drink) {
+                // Create a container div
+                var drinkDiv = document.createElement("div");
+                drinkDiv.style.marginBottom = "10px";
+    
+                // Create a paragraph for the drink name
+                var p = document.createElement("p");
+                p.textContent = drink.strDrink;
+    
+                // Create an image element
+                var img = document.createElement("img");
+                img.src = drink.strDrinkThumb;
+                img.alt = drink.strDrink;
+                img.style.height = "100px";
+    
+                // Add p and img inside drinkDiv
+                drinkDiv.appendChild(p);
+                drinkDiv.appendChild(img);
+    
+                // Add drinkDiv to the display container
+                displayDiv.appendChild(drinkDiv);
+            });
+    
         })
-
+        .catch(function(error) {
+            console.error("ERROR:", error);
+        });
+    
     </script>
+    
 </body>
 </html>

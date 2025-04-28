@@ -67,23 +67,62 @@
 
 
     <script type="text/javascript">
+console.log("---------------------")
+console.log("PART 1...")
 
-        console.log("---------------------")
-        console.log("PART 1...")
+// Part 1: Model raining and umbrella ownership
+let isRaining = true; // you can change to false if you want
+let ownsUmbrella = false; // you can change to true if you want
 
+console.log("Is it raining?", isRaining);
+console.log("Owns umbrella?", ownsUmbrella);
 
+// Provide instructions based on conditions
+if (!isRaining) {
+    console.log("Skies are clear");
+} else {
+    if (ownsUmbrella) {
+        console.log("Bring your umbrella");
+    } else {
+        console.log("Buy an umbrella");
+    }
+}
 
+console.log("---------------------")
+console.log("PART 2...")
 
+// Part 2: Create advise function
+function advise(isRaining, ownsUmbrella) {
+    if (!isRaining) {
+        return "Skies are clear";
+    } else {
+        if (ownsUmbrella) {
+            return "Bring your umbrella";
+        } else {
+            return "Buy an umbrella";
+        }
+    }
+}
 
-        console.log("---------------------")
-        console.log("PART 2...")
+// Test the advise function with all four possibilities
+console.log(advise(true, true));   // It is raining and owns umbrella
+console.log(advise(true, false));  // It is raining and doesn't own umbrella
+console.log(advise(false, true));  // It is not raining but owns umbrella
+console.log(advise(false, false)); // It is not raining and doesn't own umbrella
 
+console.log("---------------------")
+console.log("PART 3...")
 
+// Part 3: Handle button click to advise user
+document.getElementById("advise").addEventListener("click", function() {
+    const isRainingChecked = document.getElementById("switch-raining").checked;
+    const ownsUmbrellaChecked = document.getElementById("switch-umbrella").checked;
 
+    const message = advise(isRainingChecked, ownsUmbrellaChecked);
 
+    document.getElementById("display-message").textContent = message;
+});
 
-        console.log("---------------------")
-        console.log("PART 3...")
 
 
 

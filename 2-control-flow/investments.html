@@ -53,26 +53,91 @@
 
         function formatUSD(price) {
             return `$${price.toFixed(2)}`
-        }
+}
 
-        console.log("---------------------")
-        console.log("PART 1...")
+console.log("---------------------")
+console.log("PART 1...")
 
+// Part 1: Constant 8% return per year
+let balance = 150000;
+const target = 1000000;
+const rate = 0.08;
+let years = 0;
 
+while (balance < target) {
+    balance = balance * (1 + rate);
+    years++;
+}
 
+console.log("Original Balance:", formatUSD(150000));
+console.log("Years Needed:", years);
+console.log("Ending Balance:", formatUSD(balance));
 
+console.log("---------------------")
+console.log("PART 2...")
 
+// Part 2: Random returns using normal distribution
+let randomBalance = 150000;
+let randomYears = 0;
+const randomReturns = [];
 
-        console.log("---------------------")
-        console.log("PART 2...")
+const mean = 0.08;
+const stdDev = 0.15;
 
+const randomNormal = d3.randomNormal(mean, stdDev);
 
+while (randomBalance < target) {
+    const randomReturn = randomNormal();
+    randomBalance = randomBalance * (1 + randomReturn);
+    randomReturns.push((randomReturn * 100).toFixed(2) + "%");
+    randomYears++;
+}
 
+console.log("Original Balance:", formatUSD(150000));
+console.log("Years Needed:", randomYears);
+console.log("Ending Balance:", formatUSD(randomBalance));
+console.log("Yearly Random Returns:", randomReturns);
 
+console.log("---------------------")
+console.log("PART 3...")
 
+// Part 3: HTML input for user simulation
+// Create elements for input and button
+const inputContainer = document.createElement("div");
+inputContainer.innerHTML = `
+    <label>Initial Balance: <input id="input-initial" type="number" value="150000"></label><br>
+    <label>Target Balance: <input id="input-target" type="number" value="1000000"></label><br>
+    <label>Mean Return (as decimal): <input id="input-mean" type="number" step="0.01" value="0.08"></label><br>
+    <label>Standard Deviation: <input id="input-stddev" type="number" step="0.01" value="0.15"></label><br>
+    <button id="run-simulation">Run Simulation</button>
+    <p id="simulation-result"></p>
+`;
 
-        console.log("---------------------")
-        console.log("PART 3...")
+document.body.appendChild(inputContainer);
+
+// Button click event
+document.getElementById("run-simulation").addEventListener("click", function() {
+    const initial = Number(document.getElementById("input-initial").value);
+    const target = Number(document.getElementById("input-target").value);
+    const mean = Number(document.getElementById("input-mean").value);
+    const stdDev = Number(document.getElementById("input-stddev").value);
+
+    let balance = initial;
+    let years = 0;
+
+    const randomNormal = d3.randomNormal(mean, stdDev);
+
+    while (balance < target) {
+        const randReturn = randomNormal();
+        balance = balance * (1 + randReturn);
+        years++;
+    }
+
+    document.getElementById("simulation-result").innerHTML = `
+        Years Needed: ${years}<br>
+        Ending Balance: ${formatUSD(balance)}
+    `;
+});
 
 
 

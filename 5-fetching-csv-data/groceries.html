@@ -80,30 +80,55 @@
             console.log("DATA:", data)
             var products = data
 
-            console.log("---------------------")
+console.log("---------------------")
             console.log("PART 1...")
 
+            console.log("Total Products:", products.length);
+            products.forEach(product => {
+        const price = parseFloat(product.price);
+        console.log(`${product.name}: ${formatUSD(price)}`);
+    });
 
+    const departments = [];
+    products.forEach(product => {
+        if (!departments.includes(product.department)) {
+            departments.push(product.department);
+        }
+    });
 
+    console.log("Unique Departments:", departments.length);
 
+    departments.forEach(dept => {
+        console.log(dept.toUpperCase());
+    });
 
+    const beverages = products.filter(product => product.department.toLowerCase() === "beverages");
+    console.log("Beverage Products:", beverages.length);
+
+    const beveragePrices = beverages.map(b => parseFloat(b.price));
+    const avgBeveragePrice = d3.mean(beveragePrices);
+    console.log("Average Beverage Price:", formatUSD(avgBeveragePrice));
 
             console.log("---------------------")
             console.log("PART 2...")
 
+            const sortedProducts = products.sort((a, b) => a.name.localeCompare(b.name));
+
+            const ul = document.getElementById("display-groceries");
+    sortedProducts.forEach(product => {
+        const li = document.createElement("li");
+        li.textContent = `${product.name}: ${formatUSD(parseFloat(product.price))}`;
+        ul.appendChild(li);
+    });
+
+}).catch(function(error) {
+    console.error("ERROR:", error)
+})    
 
 
-
-
-
-
-
-
-
-            }).catch(function(error) {
-                console.error("ERROR:", error)
-        })
-
+    </script>
+</body>
+</html>
     </script>
 </body>
 </html>

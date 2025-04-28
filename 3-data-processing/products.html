@@ -38,31 +38,17 @@
 
     <script type="text/javascript">
 
-        var products = [
-            {
-                "name": "Textbook",
-                "description": "It has all the answers.",
-                "price": 129.99,
-                "imageURL": "https://picsum.photos/id/24/360/200"
-            },
-            {
-                "name": "Cup of Tea",
-                "description": "An individually-prepared tea or coffee of choice.",
-                "price": 3.49,
-                "imageURL": "https://picsum.photos/id/225/360/200"
-            },
-            {
-                "name": "Strawberries",
-                "description": "Juicy organic strawberries.",
-                "price": 4.99,
-                "imageURL": "https://picsum.photos/id/1080/360/200"
-            }
-        ]
-
-        console.log("---------------------")
+console.log("---------------------")
         console.log("PART 1...")
 
+        console.log("Total Products:", products.length);
+        products.forEach(product => {
+        console.log(`${product.name}: $${product.price.toFixed(2)}`);
+});
+        const matchingProducts = products.filter(product => product.price < 50);
+        console.log("Matching Products (under $50):", matchingProducts);
 
+        console.log("Number of Matching Products:", matchingProducts.length);   
 
 
 
@@ -70,8 +56,40 @@
         console.log("---------------------")
         console.log("PART 2...")
 
+        const displayDiv = document.getElementById("display-products");
+
+products.forEach(product => {
+    const productDiv = document.createElement("div");
+
+    const nameP = document.createElement("p");
+    nameP.textContent = `Name: ${product.name}`;
+    productDiv.appendChild(nameP);
+
+    const descP = document.createElement("p");
+    descP.textContent = `Description: ${product.description}`;
+    productDiv.appendChild(descP);
+
+    const priceP = document.createElement("p");
+    priceP.textContent = `Price: $${product.price.toFixed(2)}`;
+    productDiv.appendChild(priceP);
+
+    const img = document.createElement("img");
+    img.src = product.imageURL;
+    img.alt = product.name;
+    img.style.maxWidth = "360px";
+    img.style.height = "auto";
+    productDiv.appendChild(img);
+
+    const hr = document.createElement("hr");
+    productDiv.appendChild(hr);
+
+    displayDiv.appendChild(productDiv);
+});
 
 
+    </script>
+</body>
+</html>
 
     </script>
 </body>

@@ -30,14 +30,18 @@
         body: JSON.stringify(postData)
       })
       .then(response => {
-        // Log the response so you can verify that the server received the data.
-        console.log("SUCCESS!")
-        console.log("Response:", response)
-        // work with the response here
+  console.log("SUCCESS!");
+  console.log("Response:", response);
 
+  // Work with the response:
+  const receivedData = response.json || JSON.parse(response.data);
+  ;
 
+  const p = document.createElement("p");
+  p.textContent = `Received name: ${receivedData.name}, email: ${receivedData.email}, age: ${receivedData.age}`;
+  document.body.appendChild(p);
+})
 
-      })
       .catch(error => {
         console.error("Error in POST request:", error)
       })

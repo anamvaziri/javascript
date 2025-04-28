@@ -80,27 +80,89 @@
 
         var degreeSymbol = "\u00B0"
 
-        var requestUrl = "https://raw.githubusercontent.com/prof-rossetti/internet-technologies/refs/heads/main/data/weather-data.json"
+        var degreeSymbol = "\u00B0";  // Unicode for ° symbol
 
-        fetch(requestUrl).then(response => response.json())
-            .then(function(data){
-                console.log("DATA", data)
+var requestUrl = "https://raw.githubusercontent.com/prof-rossetti/internet-technologies/main/data/weather-data.json";
 
+fetch(requestUrl).then(response => response.json())
+    .then(function(data) {
+        console.log("DATA", data);
 
-                console.log("---------------------")
-                console.log("PART 1...")
+        console.log("---------------------");
+        console.log("PART 1...");
 
+        // Part 1A: Fetching is already done ✅
 
+        // Part 1B: Display date generated
+        var dateGenerated = data.properties.updated;
+        console.log("Date Generated:", dateGenerated);
 
+        // Part 1C: Number of periods available
+        var periods = data.properties.periods;
+        console.log("Number of periods:", periods.length);
 
-                console.log("---------------------")
-                console.log("PART 2...")
+        // Part 1D: Filter for daytime periods only
+        var daytimePeriods = periods.filter(function(period) {
+            return period.isDaytime === true;
+        });
 
+        console.log("Number of daytime periods:", daytimePeriods.length);
 
+        // Part 1E: Display each daytime forecast nicely
+        daytimePeriods.forEach(function(period) {
+            console.log(`${period.name}: ${period.temperature}${degreeSymbol}${period.temperatureUnit}, ${period.shortForecast}`);
+        });
 
+        console.log("---------------------");
+        console.log("PART 2...");
 
-            })
-            .catch(err => console.log(err))
+        // Part 2A: Display date generated in the span
+        document.getElementById("display-date").textContent = dateGenerated.slice(0, 10); // Keep only the YYYY-MM-DD part
+
+        // Part 2B: Display seven day forecast in table
+        var table = document.getElementById("display-forecast");
+
+        // Add table headers
+        var headerRow = document.createElement("tr");
+        headerRow.innerHTML = `
+            <th>Period</th>
+            <th>Temperature</th>
+            <th>Forecast</th>
+            <th>Icon</th>
+        `;
+        table.appendChild(headerRow);
+
+        // Add a row for each daytime period
+        daytimePeriods.forEach(function(period) {
+            var row = document.createElement("tr");
+
+            var periodCell = document.createElement("td");
+            periodCell.textContent = period.name;
+
+            var tempCell = document.createElement("td");
+            tempCell.textContent = `${period.temperature}${degreeSymbol}${period.temperatureUnit}`;
+
+            var forecastCell = document.createElement("td");
+            forecastCell.textContent = period.shortForecast || period.detailedForecast;
+
+            var iconCell = document.createElement("td");
+            var img = document.createElement("img");
+            img.src = period.icon;
+            img.alt = period.shortForecast;
+            img.style.maxWidth = "50px";  // make icon smaller
+            iconCell.appendChild(img);
+
+            row.appendChild(periodCell);
+            row.appendChild(tempCell);
+            row.appendChild(forecastCell);
+            row.appendChild(iconCell);
+
+            table.appendChild(row);
+        });
+
+    })
+    .catch(err => console.log(err));
+
 
     </script>
 </body>
